@@ -1,0 +1,90 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "IHMfour.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+    ATTFOUR = new four(); //nouvel objet four
+	Timer1->Enabled=true;
+	 voltage=2;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::BtnTempClick(TObject *Sender)
+{
+switch(ListTemp->Text.ToInt())
+{
+	 case 0:
+	 ATTFOUR->Ecriture(0);
+	 break;
+
+	 case 25:
+	 ATTFOUR->Ecriture(2.5);
+	 break;
+
+	 case 50:
+	 ATTFOUR->Ecriture(5);
+	 break;
+
+	 case 75:
+	 ATTFOUR->Ecriture(7.5);
+	 break;
+
+	 case 100:
+	 ATTFOUR->Ecriture(10);
+	 break;
+	 }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+   temperature=ATTFOUR->Lecture(); //lecture de la température et stockage dans la variable 'temperature'
+   LblTemp->Caption=temperature;  //affichage de la température
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Timer2Timer(TObject *Sender)
+{
+
+	ATTFOUR->Ecriture(voltage);
+
+
+	if(temperature-2>tempcom)
+	{
+		voltage=0;
+	}
+	if(temperature<tempcom)
+	{
+		voltage+=0.2;
+	}
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::BtnStartClick(TObject *Sender)
+{
+	tempcom=EdtTemp->Text.ToInt();
+	Timer2->Enabled= true;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::BtnArretClick(TObject *Sender)
+{
+ATTFOUR->Ecriture(0);
+voltage = 2 ;
+Timer2->Enabled=false;
+
+}
+//---------------------------------------------------------------------------
+
