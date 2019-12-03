@@ -17,6 +17,9 @@ class four{
 		~four();
 	   int	Lecture();
 	  void	Ecriture(float tension);
+
+
+
 };
 
 

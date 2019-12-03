@@ -37,5 +37,5 @@ int four::Lecture()
 
 void four::Ecriture(float tension)
 {
-		AO_VWriteChannel(IdCarte,0,tension); //ecriture
+		AO_VWriteChannel(IdCarte,0,tension);
 }
